@@ -3,15 +3,18 @@ import {connect} from 'react-redux';
 import {loadUser} from '../../actions/user';
 import {useEffect} from 'react';
 import {useParams} from 'react-router-dom';
+import SignOutButton from '../../components/SignOutButton';
 const Profile = ({loadUser, profileUser} : {loadUser: any, profileUser: any}) => {
   const params = useParams();
   useEffect(() => {
+    console.log('In');
     loadUser(params.uid);
-  });
+  }, []);
   return (
     <div>
       { profileUser && profileUser.email && <p>Hello! {profileUser.email}</p>
       }
+      { profileUser && <SignOutButton/>}
     </div>
   );
 };

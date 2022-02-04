@@ -1,14 +1,14 @@
 import React from 'react';
 import {useNavigate} from 'react-router-dom';
-import {signOut} from '../../actions/auth';
+import {signOut as signOutService} from '../../actions/auth';
 import {connect} from 'react-redux';
 
-const SignOut = ({SignOut}: {SignOut:any}) => {
+const SignOutButton = ({signOut}: {signOut:any}) => {
   const navigate = useNavigate();
   return (
     <div>
       <h1>SignOut</h1>
-      <button onClick={() => navigate('/')}>Sign Out</button>
+      <button onClick={() => signOut(() => navigate('/'))}>Sign Out</button>
     </div>
   );
 };
@@ -22,10 +22,10 @@ function mapStateToProps(state:any) {
 const mapDispatchToProps = (dispatch:any) => {
   return {
     dispatch,
-    signOut: (callback:any) => signOut(callback),
+    signOut: (callback:any) => dispatch(signOutService(callback)),
   };
 };
 export default connect(
     mapStateToProps,
     mapDispatchToProps,
-)(SignOut);
+)(SignOutButton);

@@ -31,17 +31,6 @@ const theme = {
         },
       },
     },
-    MuiTextField: {
-      styleOverrides: {
-        root: {
-          [`& fieldset`]: {
-            borderRadius: '16px',
-            width: 300,
-          },
-          display: 'block',
-        },
-      },
-    },
   },
 } as const;
 type CustomTheme = {

@@ -1,8 +1,9 @@
 import React from 'react';
+import EventList from '../../components/EventList';
 
 const Home = () => (
   <div>
-    <h1>Home</h1>
+    <EventList></EventList>
   </div>
 );
 

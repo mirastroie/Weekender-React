@@ -1,6 +1,7 @@
 import {auth} from '../components/Firestore/firestore';
 import {
   createUserWithEmailAndPassword,
+  onAuthStateChanged,
   signInWithEmailAndPassword,
   signInWithPopup,
   signOut as firebaseSignOut,
@@ -113,6 +114,14 @@ const signInWithGoogle = (callback:any) => (dispatch: any) => {
       });
 };
 
+
+const verifyAuth = () => (dispatch:any) => {
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      dispatch(signInSuccess(user));
+    }
+  });
+};
 /**
  * Sign in with success
  *
@@ -126,4 +135,11 @@ const signInSuccess = (payload:any) => {
   };
 };
 
-export {signUp, signIn, signInWithGoogle, signUpWithGoogle, signOut};
+export {
+  signUp,
+  signIn,
+  signInWithGoogle,
+  signUpWithGoogle,
+  signOut,
+  verifyAuth,
+};
