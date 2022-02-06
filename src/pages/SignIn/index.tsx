@@ -11,7 +11,7 @@ import {StyledInput} from '../../utils/constants/general';
 import Logo from '../../components/Logo';
 import {LANDING_IMAGE_SRC} from '../../utils/constants/general';
 
-const SignIn = ({signIn, signInWithGoogle}: {signIn:any, signInWithGoogle:any}) => {
+const SignIn = ({signIn, signInWithGoogle}: {signIn:Function, signInWithGoogle:Function}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
@@ -60,7 +60,7 @@ const SignIn = ({signIn, signInWithGoogle}: {signIn:any, signInWithGoogle:any}) 
             mt: 12,
           }}
         >
-          Don &lsquo;t you have an account?
+          Don &lsquo;t have an account?
           <Link
             style={{marginLeft: '5px'}}
             href={ROUTES.SIGN_UP}
@@ -104,8 +104,8 @@ function mapStateToProps(state:any) {
 const mapDispatchToProps = (dispatch:any) => {
   return {
     dispatch,
-    signIn: (email:string, password:string, callback:any) => dispatch(signIn(email, password, callback)),
-    signInWithGoogle: (callback:any) => dispatch(signInWithGoogle(callback)),
+    signIn: (email:string, password:string, callback:Function) => dispatch(signIn(email, password, callback)),
+    signInWithGoogle: (callback:Function) => dispatch(signInWithGoogle(callback)),
 
   };
 };

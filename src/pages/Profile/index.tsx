@@ -1,4 +1,3 @@
-/* eslint-disable max-len */
 import React from 'react';
 import {connect} from 'react-redux';
 import {loadUser} from '../../actions/user';
@@ -9,8 +8,16 @@ import EventItem from '../../components/EventItem';
 import BackCover from '../../components/BackCover';
 import {BREAKPOINTS, PROFILE_IMAGE_SRC} from '../../utils/constants/general';
 import {Box, Avatar} from '@mui/material';
+import {UserType} from '../../utils/constants/types';
 
-const Profile = ({loadUser, profileUser, readEventsByUser, events} : {loadUser: any, profileUser: any, readEventsByUser: Function, events: any}) => {
+interface ProfileProps{
+  loadUser: any;
+  profileUser: UserType;
+  readEventsByUser: Function;
+  events: any;
+};
+
+const Profile = ({loadUser, profileUser, readEventsByUser, events} : ProfileProps) => {
   const params = useParams();
   useEffect(() => {
     loadUser(params.uid);

@@ -4,8 +4,9 @@ import {Link} from 'react-router-dom';
 import {Button, Paper, Box} from '@mui/material';
 import {formatDate} from '../../utils/functions/general';
 import {PaperStyle} from '../../utils/constants/general';
+import {EventType} from '../../utils/constants/types';
 const EventItem = (props:any) => {
-  const event:any = props.event;
+  const event:EventType = props.event;
   const {month, day, dayHour}:{month:any, day:any, dayHour:any} = formatDate(event.date.seconds);
   return (
     <>

@@ -5,13 +5,14 @@ import TicketItem from '../TicketItem';
 import {readTicketsByEvent} from '../../actions/ticket';
 import {addToBasket} from '../../actions/order';
 import {Box} from '@mui/material';
+import {TicketType} from '../../utils/constants/types';
 
 interface TicketListProps{
   eventId: string;
-  tickets: Array<Object>;
+  tickets: Array<TicketType>;
   readTicketsByEvent: Function;
   addToCart: Function;
-  cartItems: Array<Object>
+  cartItems: Array<TicketType>
 };
 
 const TicketList = ({eventId, tickets, readTicketsByEvent, addToCart, cartItems}: TicketListProps) => {
@@ -19,7 +20,7 @@ const TicketList = ({eventId, tickets, readTicketsByEvent, addToCart, cartItems}
     readTicketsByEvent(eventId);
   }, []);
   const checkCart = (id:string) => {
-    return cartItems.filter((item:any) => item.ticketId == id).length == 0;
+    return cartItems.filter((item:TicketType) => item.ticketId == id).length == 0;
   };
   return (
     <div>
@@ -49,7 +50,7 @@ const mapDispatchToProps = (dispatch:any) => {
   return {
     dispatch,
     readTicketsByEvent: (eventId:string) => dispatch(readTicketsByEvent(eventId)),
-    addToCart: (ticket:object) => dispatch(addToBasket(ticket)),
+    addToCart: (ticket:TicketType) => dispatch(addToBasket(ticket)),
   };
 };
 export default connect(

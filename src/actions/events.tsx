@@ -2,7 +2,6 @@ import {ACTION_TYPES} from '../utils/constants/actionTypes';
 import {db} from '../components/Firestore/firestore';
 import {doc, getDocs, collection, getDoc, where, query} from 'firebase/firestore';
 
-
 /**
  * Load an event from the database
  *
@@ -66,9 +65,9 @@ const readLineup = (lineUpIds: Array<String>) =>
  */
 const readEventsByUser = (userId:string) =>
   async (dispatch:any) => {
-    const eventsId:any = [];
+    const eventsId:Array<String> = [];
     const events:any = [];
-    let ticketsId:any = [];
+    let ticketsId:Array<String> = [];
     const q = query(collection(db, 'orders'), where('customerId', '==', userId));
     let querySnapshot = await getDocs(q);
     querySnapshot.forEach((doc) => ticketsId = ticketsId.concat(doc.data().tickets));

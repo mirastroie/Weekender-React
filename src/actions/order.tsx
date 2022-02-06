@@ -2,23 +2,24 @@ import {ACTION_TYPES} from '../utils/constants/actionTypes';
 import {db} from '../components/Firestore/firestore';
 import {addDoc, collection, where, query, onSnapshot, updateDoc} from 'firebase/firestore';
 import {purchaseTicket} from './ticket';
+import {TicketType, EventType, OrderType} from '../utils/constants/types';
 
 /**
  * Add order to the the database
  *
- * @param {any} cartItems The items in the cart
- * @param {event} event the event for which we place the order
- * @param {userId} userId the id of the user
+ * @param {Array<TicketType>} cartItems The items in the cart
+ * @param {Event} event the event for which we place the order
+ * @param {string} userId the id of the user
  * @return {function}
  */
-const addOrder = (cartItems:any, event:any, userId:string) =>
+const addOrder = (cartItems:Array<TicketType>, event:EventType, userId:string) =>
   async (dispatch: any) => {
     const price:number = cartItems.reduce((partialSum:number, ticket:any) => partialSum + ticket.price, 0);
     console.log(price);
-    const commitedOrder:any = {
+    const commitedOrder:OrderType = {
       customerId: userId,
-      price: cartItems.map((ticket:any) => ticket.price),
-      tickets: price,
+      price: price,
+      tickets: cartItems.map((ticket:any) => ticket.ticketId),
     };
     const docRef:any = await addDoc(collection(db, 'orders'), commitedOrder);
     const orderId = docRef.id;

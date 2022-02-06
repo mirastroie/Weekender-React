@@ -5,8 +5,9 @@ import {bulkReadEvents} from '../../actions/events';
 import EventItem from '../EventItem';
 import {Box} from '@mui/material';
 import {BREAKPOINTS} from '../../utils/constants/general';
+import {EventType} from '../../utils/constants/types';
 
-const EventList = ({events, bulkReadEvents} : {events:Array<Object>, bulkReadEvents: Function}) => {
+const EventList = ({events, bulkReadEvents} : {events:Array<EventType>, bulkReadEvents: Function}) => {
   useEffect(() => {
     bulkReadEvents();
   }, []);
@@ -27,7 +28,7 @@ const EventList = ({events, bulkReadEvents} : {events:Array<Object>, bulkReadEve
               gap: 3,
               flexWrap: 'wrap',
             }}>
-              {events.map((event:any, index:number) => (
+              {events.map((event:EventType, index:number) => (
                 <EventItem key={index} event={event}></EventItem>
               ))}
             </Box>

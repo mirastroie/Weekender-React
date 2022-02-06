@@ -8,7 +8,7 @@ import {Box, Button, Link} from '@mui/material';
 import * as ROUTES from '../../utils/constants/routes';
 import Logo from '../../components/Logo';
 
-const SignUp = ({signUp, signUpWithGoogle}: {signUp:any, signUpWithGoogle:any}) => {
+const SignUp = ({signUp, signUpWithGoogle}: {signUp:Function, signUpWithGoogle:Function}) => {
   const [username, setUserName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -89,8 +89,8 @@ function mapStateToProps(state:any) {
 const mapDispatchToProps = (dispatch:any) => {
   return {
     dispatch,
-    signUp: (username:string, email:string, password:string, callback:any) => dispatch(signUp(username, email, password, callback)),
-    signUpWithGoogle: (callback:any) => dispatch(signUpWithGoogle(callback)),
+    signUp: (username:string, email:string, password:string, callback:Function) => dispatch(signUp(username, email, password, callback)),
+    signUpWithGoogle: (callback:Function) => dispatch(signUpWithGoogle(callback)),
   };
 };
 export default connect(

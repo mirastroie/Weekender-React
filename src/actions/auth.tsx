@@ -49,7 +49,7 @@ const signUp = ( username: string, email: string, password:string, callback:Func
  * @param {function} callback a function to be called afterwards
  * @return {function}
  */
-const signIn = ( email: string, password:string, callback :any) =>
+const signIn = ( email: string, password:string, callback:Function) =>
   (dispatch: any) => {
     signInWithEmailAndPassword(
         auth,
@@ -78,7 +78,7 @@ const signIn = ( email: string, password:string, callback :any) =>
  * @param {function} callback  a function to be called afterwards
  * @return {function}
  */
-const signOut = (callback:any) => async (dispatch:any) => {
+const signOut = (callback:Function) => async (dispatch:any) => {
   firebaseSignOut(auth).then(() => {
     dispatch({
       type: ACTION_TYPES.SIGN_OUT_SUCCESS,
@@ -93,7 +93,7 @@ const signOut = (callback:any) => async (dispatch:any) => {
  * @param {function} callback  a function to be called afterwards
  * @return {function}
  */
-const signUpWithGoogle = (callback:any) => (dispatch: any) => {
+const signUpWithGoogle = (callback:Function) => (dispatch: any) => {
   signInWithPopup(auth, googleProvider)
       .then((result) => {
         console.log(result);
@@ -108,7 +108,7 @@ const signUpWithGoogle = (callback:any) => (dispatch: any) => {
  * @param {function} callback  a function to be called afterwards
  * @return {function}
  */
-const signInWithGoogle = (callback:any) => (dispatch: any) => {
+const signInWithGoogle = (callback:Function) => (dispatch: any) => {
   signInWithPopup(auth, googleProvider)
       .then((result) => {
         dispatch(signInSuccess(result));

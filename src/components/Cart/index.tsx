@@ -6,10 +6,11 @@ import TicketInfo from '../../components/TicketInfo';
 import {Box} from '@mui/material';
 import BoxInfo from '../../components/BoxInfo';
 import {ORDER_STATUS} from '../../utils/constants/general';
+import {EventType, TicketType} from '../../utils/constants/types';
 
 interface CartProps{
-    cartItems: Array<Object>;
-    event: any;
+    cartItems: Array<TicketType>;
+    event: EventType;
     removeItem: Function;
     userId: string;
     addOrder: Function;
@@ -20,7 +21,7 @@ const Cart = ({cartItems, event, removeItem, userId, addOrder, status, emptyBask
   const success:boolean = status == ORDER_STATUS.SUCCESS;
   useEffect(() => {
     if (success) {
-      setTimeout(() => emptyBasket(), 100);
+      setTimeout(() => emptyBasket(), 5000);
     };
   }, [success]);
   const checkoutButton = () => (
@@ -51,7 +52,7 @@ const Cart = ({cartItems, event, removeItem, userId, addOrder, status, emptyBask
               <Box sx={{typography: 'subtitle2'}}>Start adding items to your cart</Box>
             </Box>
         }
-        {!success && cartItems.map((item:any, index:number) => (
+        {!success && cartItems.map((item:TicketType, index:number) => (
           <TicketInfo key={index} ticket={item} event ={event} removeItem={removeItem}/>
         ))
         }
@@ -85,7 +86,7 @@ const mapDispatchToProps = (dispatch:any) => {
   return {
     dispatch,
     removeItem: (ticketId:string) => dispatch(removeFromBasket(ticketId)),
-    addOrder: (items:any, event:any, userId:string) => dispatch(addOrder(items, event, userId)),
+    addOrder: (items:Array<TicketType>, event:EventType, userId:string) => dispatch(addOrder(items, event, userId)),
     emptyBasket: () => dispatch(emptyBasket()),
   };
 };

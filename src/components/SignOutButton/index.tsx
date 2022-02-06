@@ -5,7 +5,7 @@ import {connect} from 'react-redux';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faSignOutAlt} from '@fortawesome/free-solid-svg-icons';
 import styled from 'styled-components';
-const SignOutButton = ({signOut}: {signOut:any}) => {
+const SignOutButton = ({signOut}: {signOut:Function}) => {
   const navigate = useNavigate();
   return (
     <Row onClick={() => signOut(() => navigate('/'))}>

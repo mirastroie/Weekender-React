@@ -8,8 +8,9 @@ import EventInfo from '../../components/EventInfo';
 import BackCover from '../../components/BackCover';
 import {formatDate} from '../../utils/functions/general';
 import {BREAKPOINTS} from '../../utils/constants/general';
+import {EventType} from '../../utils/constants/types';
 
-const Event = ({event, readEvent, isLoading}: {event:any, readEvent:Function, isLoading: Boolean}) => {
+const Event = ({event, readEvent, isLoading}: {event:EventType, readEvent:Function, isLoading: Boolean}) => {
   const params = useParams();
   useEffect(() => {
     readEvent(params.uid);

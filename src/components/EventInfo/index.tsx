@@ -4,16 +4,17 @@ import {useEffect} from 'react';
 import {readLineup} from '../../actions/events';
 import BoxInfo from '../../components/BoxInfo';
 import {Avatar, Box} from '@mui/material';
+import {ArtistLink, ArtistType, EventType} from '../../utils/constants/types';
 
 interface EventInfoProps{
-  lineup: any;
-  readLineup: any;
-  event:any;
+  lineup: Array<ArtistType>;
+  readLineup: Function;
+  event:EventType;
 }
 
 const EventInfo = ({lineup, readLineup, event}:EventInfoProps) => {
   useEffect(() => {
-    const lineupIds = event.lineup.map((artist:any) => artist.artistId);
+    const lineupIds = event.lineup.map((artist:ArtistLink) => artist.artistId);
     readLineup(lineupIds);
   }, []);
   return (
@@ -36,7 +37,7 @@ const EventInfo = ({lineup, readLineup, event}:EventInfoProps) => {
           <Box sx={{typography: 'body1'}}>Lineup</Box>
           <div style={{display: 'flex', gap: '10px', marginTop: '10px', flexWrap: 'wrap'}}>
             {
-              lineup.map((artist:any, index:number) => (
+              lineup.map((artist:ArtistType, index:number) => (
                 <Box
                   key={index}
                   sx={{
@@ -79,7 +80,7 @@ function mapStateToProps(state:any) {
 const mapDispatchToProps = (dispatch:any) => {
   return {
     dispatch,
-    readLineup: (lineupIds:any) => dispatch(readLineup(lineupIds)),
+    readLineup: (lineupIds:Array<String>) => dispatch(readLineup(lineupIds)),
   };
 };
 export default connect(

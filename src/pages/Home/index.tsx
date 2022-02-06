@@ -8,7 +8,7 @@ const Home = () => (
     <BackCover
       src={EVENTS_IMAGE_SRC}
       title="Discover events"
-      subtitle="Shop millions of live events and discover cant-miss concerts."
+      subtitle="Shop millions of live events and discover can&lsquo;t-miss concerts."
     >
       <div>
       </div>
