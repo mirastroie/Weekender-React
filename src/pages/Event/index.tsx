@@ -30,9 +30,23 @@ const Event = ({event, readEvent, isLoading}: {event:any, readEvent:Function, is
           subtitle={<Subtitle event={event}></Subtitle>}
         ></BackCover>
         {/* <EventInfo event={event}></EventInfo> */}
-        <Box sx={{ml: BREAKPOINTS.INNER_CONTAINER.LEFT, mt: BREAKPOINTS.INNER_CONTAINER.TOP}}>
-          <TicketList eventId={event.eventId}></TicketList>
-          <Cart/>
+        <Box sx={{ml: BREAKPOINTS.INNER_CONTAINER.LEFT,
+          mt: BREAKPOINTS.INNER_CONTAINER.TOP,
+          pb: 15}}>
+          <Box sx={{display: 'flex'}}>
+            <Box sx={{
+              flexGrow: 1,
+              width: '100%'}}>
+              <TicketList eventId={event.eventId}></TicketList>
+            </Box>
+            <Box sx={{
+              width: '600px',
+              marginTop: '-100px',
+              marginRight: '15px',
+            }}>
+              <Cart/>
+            </Box>
+          </Box>
         </Box>
       </Box>}
     </>

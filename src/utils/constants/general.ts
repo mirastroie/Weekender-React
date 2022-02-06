@@ -15,8 +15,7 @@ const ORDER_STATUS = {
 const PaperStyle = {
   padding: '10px',
   height: 'auto',
-  margin: '10px 0',
-  display: 'flex',
+  display: 'inline-flex',
   flexDirection: 'row',
   borderRadius: '10px',
   gap: '20px',

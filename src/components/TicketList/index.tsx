@@ -4,7 +4,7 @@ import {useEffect} from 'react';
 import TicketItem from '../TicketItem';
 import {readTicketsByEvent} from '../../actions/ticket';
 import {addToBasket} from '../../actions/order';
-
+import {Box} from '@mui/material';
 
 interface TicketListProps{
   eventId: string;
@@ -24,10 +24,15 @@ const TicketList = ({eventId, tickets, readTicketsByEvent, addToCart, cartItems}
   return (
     <div>
       <h2>Tickets</h2>
-      {tickets && <div>
+      {tickets &&
+      <Box sx={{width: '100%',
+        display: 'flex',
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        gap: 3}}>
         {tickets.map((ticket:any, index:number) => (
           checkCart(ticket.ticketId) && <TicketItem key={index} ticket={ticket} addToCart={addToCart} ></TicketItem>
-        ))}</div>
+        ))}</Box>
       }
     </div>
   );

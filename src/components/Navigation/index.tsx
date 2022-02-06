@@ -7,17 +7,46 @@ import {faUserCircle} from '@fortawesome/free-solid-svg-icons';
 import {faShoppingCart} from '@fortawesome/free-solid-svg-icons';
 import {BREAKPOINTS} from '../../utils/constants/general';
 import SignOutButton from '../SignOutButton';
-const Navigation = (props:any) => (
-  <Container>
-    <div style={{marginTop: '14vh', display: 'flex', flexDirection: 'column'}}>
-      <MenuItem path={`${ROUTES.PROFILE}/${props.userId}`} icon={faUserCircle}></MenuItem>
-      <MenuItem path={ROUTES.HOME} icon={faHome}></MenuItem>
-      <MenuItem path={ROUTES.HOME} icon={faShoppingCart}></MenuItem>
-    </div>
-    <div style={{flexGrow: 1}}></div>
-    <SignOutButton/>
-  </Container>
-);
+import {Button, Box, Modal} from '@mui/material';
+import Cart from '../../components/Cart';
+
+const Navigation = (props:any) => {
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+  return (
+    <>
+      <Modal
+        open={open}
+        onClose={handleClose}
+      >
+        <Box sx={ModalStyle}>
+          <Cart/>
+        </Box>
+      </Modal>
+      <Container>
+        <div style={{marginTop: '14vh', display: 'flex', flexDirection: 'column'}}>
+          <MenuItem path={`${ROUTES.PROFILE}/${props.userId}`} icon={faUserCircle}></MenuItem>
+          <MenuItem path={ROUTES.HOME} icon={faHome}></MenuItem>
+          <Button sx={{p: 0}} onClick={handleOpen}><MenuItem path={undefined} icon={faShoppingCart}></MenuItem></Button>
+        </div>
+        <div style={{flexGrow: 1}}></div>
+        <SignOutButton/>
+      </Container>
+    </>
+  );
+};
+
+
+const ModalStyle = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  borderRadius: '16px',
+  boxShadow: 24,
+  // boxShadow: '0px 0px 27px 6px rgba(255,255,255,0.32)',
+};
 
 const Container = styled.div`
   display: flex;

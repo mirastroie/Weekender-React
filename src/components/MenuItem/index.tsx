@@ -2,14 +2,27 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import styled from 'styled-components';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+
+const Item = ({icon}:{icon:any}) => (
+  <div style={menuItemTitle}>
+    <Row>
+      <FontAwesomeIcon icon={icon} style={{width: '30px', height: '30px'}}></FontAwesomeIcon>
+    </Row>
+  </div>
+);
+
 function MenuItem({path, icon}:{path:any, icon:any}) {
   const Path = path;
-  return (
-    <Link to={Path} style={menuItemTitle}>
-      <Row>
-        <FontAwesomeIcon icon={icon} style={{width: '30px', height: '30px'}}></FontAwesomeIcon>
-      </Row>
-    </Link>
+  return ( <>
+    {path &&
+      <Link to={Path} style={{textDecoration: 'none'}}>
+        <Item icon={icon}></Item>
+      </Link>
+    }
+    { !path &&
+        <Item icon={icon}></Item>
+    }
+  </>
   );
 }
 
@@ -26,7 +39,6 @@ const menuItemTitle = {
   lineHeight: '20px',
   letterSpacing: '0.2px',
   color: '#A4A6B3',
-  textDecoration: 'none',
   borderRadius: '50%',
 };
 

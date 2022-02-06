@@ -21,10 +21,16 @@ const EventList = ({events, bulkReadEvents} : {events:Array<Object>, bulkReadEve
           mt: 12,
         }}>
           <div>
-            {events !== [] && <div>
+            {events !== [] &&
+            <Box sx={{
+              display: 'flex',
+              gap: 3,
+              flexWrap: 'wrap',
+            }}>
               {events.map((event:any, index:number) => (
                 <EventItem key={index} event={event}></EventItem>
-              ))}</div>
+              ))}
+            </Box>
             }
           </div>
         </Box>
