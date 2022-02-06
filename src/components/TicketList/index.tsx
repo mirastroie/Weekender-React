@@ -3,18 +3,30 @@ import {connect} from 'react-redux';
 import {useEffect} from 'react';
 import TicketItem from '../TicketItem';
 import {readTicketsByEvent} from '../../actions/ticket';
+import {addToBasket} from '../../actions/order';
 
 
-const TicketList = ({eventId, tickets, readTicketsByEvent} : {eventId:string, tickets:Array<Object>, readTicketsByEvent: Function}) => {
+interface TicketListProps{
+  eventId: string;
+  tickets: Array<Object>;
+  readTicketsByEvent: Function;
+  addToCart: Function;
+  cartItems: Array<Object>
+};
+
+const TicketList = ({eventId, tickets, readTicketsByEvent, addToCart, cartItems}: TicketListProps) => {
   useEffect(() => {
     readTicketsByEvent(eventId);
   }, []);
+  const checkCart = (id:string) => {
+    return cartItems.filter((item:any) => item.ticketId == id).length == 0;
+  };
   return (
     <div>
-      <h1>Tickets</h1>
+      <h2>Tickets</h2>
       {tickets && <div>
         {tickets.map((ticket:any, index:number) => (
-          <TicketItem key={index} ticket={ticket}></TicketItem>
+          checkCart(ticket.ticketId) && <TicketItem key={index} ticket={ticket} addToCart={addToCart} ></TicketItem>
         ))}</div>
       }
     </div>
@@ -24,6 +36,7 @@ const TicketList = ({eventId, tickets, readTicketsByEvent} : {eventId:string, ti
 function mapStateToProps(state:any) {
   return {
     tickets: state.ticketReducer.tickets,
+    cartItems: state.orderReducer.basket,
   };
 }
 
@@ -31,6 +44,7 @@ const mapDispatchToProps = (dispatch:any) => {
   return {
     dispatch,
     readTicketsByEvent: (eventId:string) => dispatch(readTicketsByEvent(eventId)),
+    addToCart: (ticket:object) => dispatch(addToBasket(ticket)),
   };
 };
 export default connect(

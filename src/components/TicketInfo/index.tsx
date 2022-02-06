@@ -4,9 +4,11 @@ import {Paper, Box, Button} from '@mui/material';
 
 interface TicketItemProps{
   ticket: any;
-  addToCart: Function;
+  removeItem: Function;
 }
-const TicketItem = ({ticket, addToCart}:TicketItemProps) => {
+const TicketInfo = (props:TicketItemProps) => {
+  const ticket = props.ticket;
+  const removeItem = props.removeItem;
   return (
     <>
       <Paper sx={PaperStyle as React.CSSProperties} style={{width: '400px'}}>
@@ -27,13 +29,13 @@ const TicketItem = ({ticket, addToCart}:TicketItemProps) => {
         <Button
           size="medium"
           variant="contained"
-          onClick={() => addToCart(ticket)}
+          onClick={() => removeItem(ticket.ticketId)}
           disableElevation>
-          <Box sx={{fontWeight: 500}}>Add to cart</Box>
+          <Box sx={{fontWeight: 500}}> Remove </Box>
         </Button>
       </Paper>
     </>
   );
 };
 
-export default TicketItem;
+export default TicketInfo;

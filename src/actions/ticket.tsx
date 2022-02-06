@@ -1,6 +1,6 @@
 import {ACTION_TYPES} from '../utils/constants/actionTypes';
 import {db} from '../components/Firestore/firestore';
-import {doc, getDocs, collection, getDoc, where, query, onSnapshot} from 'firebase/firestore';
+import {doc, getDocs, collection, getDoc, where, query, onSnapshot, updateDoc} from 'firebase/firestore';
 
 
 /**
@@ -36,21 +36,46 @@ const bulkReadTickets = () =>
     });
   };
 
+
+/**
+ * Read all tickets for a given event
+ *
+ * @param {string} eventId the id of the event
+ * @return {Promise}
+ */
 const readTicketsByEvent = (eventId:string) =>
   async (dispatch:any) => {
-    const q = query(collection(db, 'tickets'), where('eventId', '==', eventId));
+    const q = query(collection(db, 'tickets'), where('eventId', '==', eventId), where('purchased', '==', false));
     onSnapshot(q, (snapshot:any) => {
       const tickets:any = [];
       snapshot.forEach((doc:any) => {
         tickets.push(doc.data());
-        dispatch({
-          type: ACTION_TYPES.READ_TICKETS_BY_EVENT,
-          payload: {
-            tickets,
-            eventId,
-          },
-        });
       });
+      dispatch({
+        type: ACTION_TYPES.READ_TICKETS_BY_EVENT,
+        payload: {
+          tickets,
+          eventId,
+        },
+      });
+    });
+  };
+
+/**
+ * Set a ticket as purchased
+ *
+ * @param {string} ticketId the id of the ticket
+ * @return {Promise}
+ */
+const purchaseTicket = (ticketId:string) =>
+  async (dispatch: any) => {
+    const docRef = doc(db, 'tickets', ticketId);
+    await updateDoc(docRef, {
+      purchased: true,
+    });
+    dispatch({
+      type: ACTION_TYPES.BOUGHT_TICKET,
+      payload: {},
     });
   };
 
@@ -58,4 +83,5 @@ export {
   readTicket,
   bulkReadTickets,
   readTicketsByEvent,
+  purchaseTicket,
 };

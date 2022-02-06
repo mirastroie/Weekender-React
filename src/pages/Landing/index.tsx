@@ -6,14 +6,13 @@ import {useEffect} from 'react';
 import * as ROUTES from '../../utils/constants/routes';
 import {Link} from 'react-router-dom';
 
-const Landing = ({userId, auth, signOut, users, loadUsers} : {userId:string, auth: any, signOut:any, users:any, loadUsers: any}) => {
+const Landing = ({userId, signOut, users, loadUsers} : {userId:string, signOut:any, users:any, loadUsers: any}) => {
   useEffect(() => {
     loadUsers();
   }, []);
   return (
     <div>
       <h1>Landing</h1>
-      {console.log(auth)}
       { userId &&
       <Link to={`${ROUTES.PROFILE}/${userId}`}>Profile</Link>
       }
@@ -29,7 +28,6 @@ const Landing = ({userId, auth, signOut, users, loadUsers} : {userId:string, aut
 function mapStateToProps(state:any) {
   return {
     userId: state.authReducer.userId,
-    auth: state.firebaseReducer.auth,
     users: state.userReducer.users,
   };
 }

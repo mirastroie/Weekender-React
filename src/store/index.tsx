@@ -5,6 +5,7 @@ import rootReducer from '../reducers/index';
 import storage from 'redux-persist/lib/storage';
 const persistConfig = {
   key: 'root',
+  blacklist: ['ticketReducer', 'eventReducer'],
   storage,
 };
 const persistedReducer = persistReducer(persistConfig, rootReducer);

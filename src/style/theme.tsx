@@ -10,13 +10,13 @@ const theme = {
   palette: {
     mode: 'dark',
     primary: {
-      main: '#6F00FF',
+      main: '#FF5B49',
     },
     secondary: {
-      main: '#4666FF',
+      main: '#121212',
     },
     background: {
-      default: '#222222',
+      default: '#131516',
       dark: '#131516',
     },
   },

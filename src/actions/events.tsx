@@ -11,6 +11,10 @@ import {doc, getDocs, collection, getDoc, where, query} from 'firebase/firestore
  */
 const readEvent = (eventId:string) =>
   async (dispatch: any) => {
+    dispatch({
+      type: ACTION_TYPES.LOADING,
+      payload: {},
+    });
     const docRef = doc(db, 'events', eventId);
     getDoc(docRef).then((docSnap) => {
       dispatch({
@@ -53,8 +57,34 @@ const readLineup = (lineUpIds: Array<String>) =>
       payload: lineup,
     });
   };
+
+/**
+ * Read events by user
+ *
+ * @param {string} userId the id of the user
+ * @return {Promise} the ids of the events the user will/did attend
+ */
+const readEventsByUser = (userId:string) =>
+  async (dispatch:any) => {
+    const eventsId:any = [];
+    const events:any = [];
+    const q = query(collection(db, 'orders'), where('customerId', '==', userId));
+    let querySnapshot = await getDocs(q);
+    querySnapshot.forEach((doc) => eventsId.push(doc.data().eventId));
+    if (eventsId != []) {
+      const qEvents = query(collection(db, 'events'), where('eventId', 'in', eventsId));
+      querySnapshot = await getDocs(qEvents);
+      querySnapshot.forEach((doc) => events.push(doc.data()));
+    }
+    dispatch({
+      type: ACTION_TYPES.READ_EVENTS_BY_USER,
+      payload: {events, userId},
+    });
+  };
+
 export {
   readEvent,
   bulkReadEvents,
   readLineup,
+  readEventsByUser,
 };
