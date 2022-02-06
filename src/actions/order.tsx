@@ -9,15 +9,16 @@ import {purchaseTicket} from './ticket';
  * @param {any} cartItems The items in the cart
  * @param {event} event the event for which we place the order
  * @param {userId} userId the id of the user
- * @return {Promise}
+ * @return {function}
  */
 const addOrder = (cartItems:any, event:any, userId:string) =>
   async (dispatch: any) => {
+    const price:number = cartItems.reduce((partialSum:number, ticket:any) => partialSum + ticket.price, 0);
+    console.log(price);
     const commitedOrder:any = {
       customerId: userId,
-      eventId: event.eventId,
-      price: event.ticketPrice,
-      tickets: cartItems.map((ticket:any) => ticket.ticketId),
+      price: cartItems.map((ticket:any) => ticket.price),
+      tickets: price,
     };
     const docRef:any = await addDoc(collection(db, 'orders'), commitedOrder);
     const orderId = docRef.id;
@@ -70,7 +71,7 @@ const emptyBasket = () => ({
  * Read orders by user
  *
  * @param {string} userId the id of the user
- * @return {Promise}
+ * @return {function}
  */
 const readOrdersByUser = (userId:string) =>
   async (dispatch:any) => {

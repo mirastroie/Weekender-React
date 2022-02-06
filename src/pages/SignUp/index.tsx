@@ -3,6 +3,10 @@ import {useState} from 'react';
 import {signUp, signUpWithGoogle} from '../../actions/auth';
 import {connect} from 'react-redux';
 import {useNavigate} from 'react-router-dom';
+import {StyledInput} from '../../utils/constants/general';
+import {Box, Button, Link} from '@mui/material';
+import * as ROUTES from '../../utils/constants/routes';
+import Logo from '../../components/Logo';
 
 const SignUp = ({signUp, signUpWithGoogle}: {signUp:any, signUpWithGoogle:any}) => {
   const [username, setUserName] = useState('');
@@ -11,9 +15,21 @@ const SignUp = ({signUp, signUpWithGoogle}: {signUp:any, signUpWithGoogle:any}) 
   const navigate = useNavigate();
 
   return (
-    <div>
-      <h3> Sign Up </h3>
-      <input
+    <Box
+      sx={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignContent: 'center',
+        alignItems: 'center',
+        margin: 'auto',
+        position: 'relative',
+        width: '450px',
+        flexDirection: 'column',
+        mt: 12,
+      }}>
+      <Logo></Logo>
+      <h3 style={{marginBottom: '20px'}}> Sign Up </h3>
+      <StyledInput
         name="username"
         value={username}
         onChange={(event) => {
@@ -22,7 +38,7 @@ const SignUp = ({signUp, signUpWithGoogle}: {signUp:any, signUpWithGoogle:any}) 
         type="text"
         placeholder="Full Name"
       />
-      <input
+      <StyledInput
         name="email"
         value={email}
         onChange={(event) => {
@@ -31,7 +47,7 @@ const SignUp = ({signUp, signUpWithGoogle}: {signUp:any, signUpWithGoogle:any}) 
         type="text"
         placeholder="Email Address"
       />
-      <input
+      <StyledInput
         name="password"
         value={password}
         onChange={(event) => {
@@ -40,9 +56,26 @@ const SignUp = ({signUp, signUpWithGoogle}: {signUp:any, signUpWithGoogle:any}) 
         type="password"
         placeholder="Password"
       />
-      <button onClick={() => signUp(username, email, password)}>Sign Up</button>
-      <button onClick={() => signUpWithGoogle(() => navigate('/'))}>Sign Up With Google</button>
-    </div>
+      <Button
+        variant="contained"
+        sx={{width: 300, mt: 4}}
+        onClick={() => signUp(username, email, password, () => navigate('/'))}
+      >
+            Sign Up
+      </Button>
+      <Button
+        variant="contained"
+        sx={{width: 300, mt: 2, mb: 6}}
+        onClick={() => signUpWithGoogle(() => navigate('/'))}
+      >
+         Sign Up With Google
+      </Button>
+      <Box
+      >
+         Already have an account?
+        <Link style={{marginLeft: '5px'}} href={ROUTES.SIGN_IN}>Sign in</Link>
+      </Box>
+    </Box>
   );
 };
 
@@ -56,7 +89,7 @@ function mapStateToProps(state:any) {
 const mapDispatchToProps = (dispatch:any) => {
   return {
     dispatch,
-    signUp: (username:string, email:string, password:string) => dispatch(signUp(username, email, password)),
+    signUp: (username:string, email:string, password:string, callback:any) => dispatch(signUp(username, email, password, callback)),
     signUpWithGoogle: (callback:any) => dispatch(signUpWithGoogle(callback)),
   };
 };

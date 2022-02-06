@@ -7,7 +7,7 @@ import {doc, getDocs, collection, getDoc, where, query} from 'firebase/firestore
  * Load an event from the database
  *
  * @param {string} eventId The id of the event
- * @return {Promise}
+ * @return {function}
  */
 const readEvent = (eventId:string) =>
   async (dispatch: any) => {
@@ -27,7 +27,7 @@ const readEvent = (eventId:string) =>
 /**
  * Read all events from the database
  *
- *  @return {Promise}
+ *  @return {function}
  */
 const bulkReadEvents = () =>
   async (dispatch:any) => {
@@ -44,12 +44,12 @@ const bulkReadEvents = () =>
  * Read the lineup (artists) by given ids
  *
  * @param {Array<String>}lineUpIds the artists ids
- * @return {Promise}
+ * @return {function}
  */
 const readLineup = (lineUpIds: Array<String>) =>
   async (dispatch:any) => {
     const lineup:Array<any> = [];
-    const q = query(collection(db, 'artists'), where('uid', 'in', lineUpIds));
+    const q = query(collection(db, 'artists'), where('artistId', 'in', lineUpIds));
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach((doc) => lineup.push(doc.data()));
     dispatch({
@@ -62,19 +62,26 @@ const readLineup = (lineUpIds: Array<String>) =>
  * Read events by user
  *
  * @param {string} userId the id of the user
- * @return {Promise} the ids of the events the user will/did attend
+ * @return {function} the ids of the events the user will/did attend
  */
 const readEventsByUser = (userId:string) =>
   async (dispatch:any) => {
     const eventsId:any = [];
     const events:any = [];
+    let ticketsId:any = [];
     const q = query(collection(db, 'orders'), where('customerId', '==', userId));
     let querySnapshot = await getDocs(q);
-    querySnapshot.forEach((doc) => eventsId.push(doc.data().eventId));
-    if (eventsId != []) {
-      const qEvents = query(collection(db, 'events'), where('eventId', 'in', eventsId));
-      querySnapshot = await getDocs(qEvents);
-      querySnapshot.forEach((doc) => events.push(doc.data()));
+    querySnapshot.forEach((doc) => ticketsId = ticketsId.concat(doc.data().tickets));
+    console.log(ticketsId);
+    if (ticketsId.length) {
+      const qTickets = query(collection(db, 'tickets'), where('ticketId', 'in', ticketsId));
+      querySnapshot = await getDocs(qTickets);
+      querySnapshot.forEach((doc) => eventsId.push(doc.data().eventId));
+      if (eventsId.length) {
+        const qEvents = query(collection(db, 'events'), where('eventId', 'in', eventsId));
+        querySnapshot = await getDocs(qEvents);
+        querySnapshot.forEach((doc) => events.push(doc.data()));
+      }
     }
     dispatch({
       type: ACTION_TYPES.READ_EVENTS_BY_USER,

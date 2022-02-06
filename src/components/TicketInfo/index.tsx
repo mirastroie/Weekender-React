@@ -4,18 +4,22 @@ import {Paper, Box, Button} from '@mui/material';
 
 interface TicketItemProps{
   ticket: any;
+  event: any;
   removeItem: Function;
 }
 const TicketInfo = (props:TicketItemProps) => {
   const ticket = props.ticket;
   const removeItem = props.removeItem;
+  const event = props.event;
   return (
     <>
-      <Paper sx={PaperStyle as React.CSSProperties} style={{width: '400px'}}>
+      <Paper
+        sx={PaperStyle as React.CSSProperties}
+        style={{width: '360px'}}>
         <div style={{display: 'inline', flexGrow: 1}}>
           <div style={{width: '200px'}}>
             <Box>
-              {ticket.price} dollars
+              {event.name}
             </Box>
             <Box sx={{
               typography: 'subtitle2',
@@ -26,13 +30,16 @@ const TicketInfo = (props:TicketItemProps) => {
             </Box>
           </div>
         </div>
-        <Button
-          size="medium"
-          variant="contained"
-          onClick={() => removeItem(ticket.ticketId)}
-          disableElevation>
-          <Box sx={{fontWeight: 500}}> Remove </Box>
-        </Button>
+        <div>
+          <Box sx={{textAlign: 'end', pr: 2, pb: 2}}>{ticket.price}$ </Box>
+          <Button
+            size="medium"
+            variant="contained"
+            onClick={() => removeItem(ticket.ticketId)}
+            disableElevation>
+            <Box sx={{fontWeight: 500}}> Remove </Box>
+          </Button>
+        </div>
       </Paper>
     </>
   );

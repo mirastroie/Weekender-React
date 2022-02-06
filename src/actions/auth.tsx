@@ -17,9 +17,10 @@ import {googleProvider} from '../components/Firestore/firestore';
  * @param {string} username the user's name
  * @param {string} email the user's email
  * @param {string} password the user's password
- * @return {Promise}
+ * @param {function} callback a function to be called afterwards
+ * @return {function}
  */
-const signUp = ( username: string, email: string, password:string) =>
+const signUp = ( username: string, email: string, password:string, callback:Function) =>
   async (dispatch: any) => {
     createUserWithEmailAndPassword(
         auth,
@@ -31,6 +32,7 @@ const signUp = ( username: string, email: string, password:string) =>
         payload: user.user,
       });
       dispatch(addUser({email: user.user.email, username, uid: user.user.uid}));
+      callback();
     }).catch((e) => {
       dispatch({
         type: ACTION_TYPES.SIGN_UP_ERROR,
@@ -45,7 +47,7 @@ const signUp = ( username: string, email: string, password:string) =>
  * @param {string} email the user's email
  * @param {string} password the user's password
  * @param {function} callback a function to be called afterwards
- * @return {Promise}
+ * @return {function}
  */
 const signIn = ( email: string, password:string, callback :any) =>
   (dispatch: any) => {
@@ -74,7 +76,7 @@ const signIn = ( email: string, password:string, callback :any) =>
  * Sign out a user
  *
  * @param {function} callback  a function to be called afterwards
- * @return {Promise}
+ * @return {function}
  */
 const signOut = (callback:any) => async (dispatch:any) => {
   firebaseSignOut(auth).then(() => {
@@ -89,7 +91,7 @@ const signOut = (callback:any) => async (dispatch:any) => {
  * Sign up a user with Google
  *
  * @param {function} callback  a function to be called afterwards
- * @return {Promise}
+ * @return {function}
  */
 const signUpWithGoogle = (callback:any) => (dispatch: any) => {
   signInWithPopup(auth, googleProvider)
@@ -104,7 +106,7 @@ const signUpWithGoogle = (callback:any) => (dispatch: any) => {
  * Sign in with Google
  *
  * @param {function} callback  a function to be called afterwards
- * @return {Promise}
+ * @return {function}
  */
 const signInWithGoogle = (callback:any) => (dispatch: any) => {
   signInWithPopup(auth, googleProvider)
@@ -126,7 +128,7 @@ const verifyAuth = () => (dispatch:any) => {
  * Sign in with success
  *
  * @param {object} payload the action's payload
- * @return {Promise}
+ * @return {function}
  */
 const signInSuccess = (payload:any) => {
   return {

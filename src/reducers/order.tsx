@@ -13,9 +13,9 @@ const orderReducer = (state = OrderState, action: any) => {
   } else if (action.type == ACTION_TYPES.ADD_ITEM) {
     return {...state, basket: [...state.basket, action.payload]};
   } else if (action.type == ACTION_TYPES.ORDER_SUCCESS) {
+    return {...state, status: ORDER_STATUS.SUCCESS};
+  } else if (action.type == ACTION_TYPES.EMPTY_BASKET) {
     return {...state, basket: [], status: ORDER_STATUS.INITIAL};
-  } else if (action.type == ACTION_TYPES.CHECKOUT_ORDER) {
-    return {...state, status: ORDER_STATUS.PENDING};
   } else if (action.type == ACTION_TYPES.REMOVE_ITEM) {
     return {...state, basket: state.basket.filter((item:any) => item.ticketId != action.payload)};
   } else return state;

@@ -7,7 +7,7 @@ import {doc, getDocs, collection, setDoc, getDoc} from 'firebase/firestore';
  * Load a user from the database
  *
  * @param {string} userId The id of the user
- * @return {Promise}
+ * @return {function}
  */
 const loadUser = (userId:any) =>
   async (dispatch: any) => {
@@ -23,7 +23,7 @@ const loadUser = (userId:any) =>
 /**
  * Read all users from the database
  *
- *  @return {Promise}
+ *  @return {function}
  */
 const loadUsers = () =>
   async (dispatch:any) => {
@@ -40,7 +40,7 @@ const loadUsers = () =>
  * Add a user to the database
  *
  * @param {any} user The user object we want to store
- * @return {Promise}
+ * @return {function}
  */
 const addUser = (user:any) =>
   async (dispatch:any) => {

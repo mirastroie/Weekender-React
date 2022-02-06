@@ -7,8 +7,8 @@ import {useParams} from 'react-router-dom';
 import {readEventsByUser} from '../../actions/events';
 import EventItem from '../../components/EventItem';
 import BackCover from '../../components/BackCover';
-import {BREAKPOINTS} from '../../utils/constants/general';
-import {Box} from '@mui/material';
+import {BREAKPOINTS, PROFILE_IMAGE_SRC} from '../../utils/constants/general';
+import {Box, Avatar} from '@mui/material';
 
 const Profile = ({loadUser, profileUser, readEventsByUser, events} : {loadUser: any, profileUser: any, readEventsByUser: Function, events: any}) => {
   const params = useParams();
@@ -21,22 +21,55 @@ const Profile = ({loadUser, profileUser, readEventsByUser, events} : {loadUser: 
       {profileUser &&
       <div>
         <BackCover
-          src="https://images.unsplash.com/photo-1609800029525-b91fdea39774?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1171&q=80"
+          src={PROFILE_IMAGE_SRC}
           title={`Hello, ${profileUser.username}`}
           subtitle="Your Profile"
         >
         </BackCover>
-        <Box sx={{ml: BREAKPOINTS.INNER_CONTAINER.LEFT, mt: BREAKPOINTS.INNER_CONTAINER.TOP}}>
-          <h3>Your next events</h3>
-          {params.uid && events[params.uid] && events[params.uid].map((event:any, index:number) => (
-            <EventItem key={index} event={event}></EventItem>
-          ))}
+        <Box
+          sx={{
+            ml: BREAKPOINTS.INNER_CONTAINER.LEFT,
+            mt: BREAKPOINTS.INNER_CONTAINER.TOP,
+          }}>
+          <Box
+            sx={{
+              display: 'flex',
+            }}>
+            <Box sx={{flexGrow: 2}}>
+              <h3>Your next events</h3>
+              {params.uid && events[params.uid] && events[params.uid].map((event:any, index:number) => (
+                <EventItem key={index} event={event}></EventItem>
+              ))}
+            </Box>
+            <Box sx={{flexGrow: 1}}>
+              {profileUser.profilePhoto &&
+              <Avatar
+                alt={profileUser.username}
+                src={profileUser.profilePhoto}
+                sx={avatarStyle}
+              ></Avatar>
+              }
+              {!profileUser.profilePhoto &&
+             <Avatar
+               sx={avatarStyle}>
+               {profileUser.username.charAt(0).toLocaleUpperCase()}
+             </Avatar>
+              }
+            </Box>
+          </Box>
         </Box>
-
       </div>
       }
     </>
   );
+};
+
+const avatarStyle = {
+  width: '200px',
+  height: '200px',
+  position: 'absolute',
+  right: '30px',
+  top: '260px',
 };
 
 function mapStateToProps(state:any) {

@@ -7,7 +7,7 @@ import {doc, getDocs, collection, getDoc, where, query, onSnapshot, updateDoc} f
  * Load a ticket from the database
  *
  * @param {string} ticketId The id of the ticket
- * @return {Promise}
+ * @return {function}
  */
 const readTicket = (ticketId:string) =>
   async (dispatch: any) => {
@@ -23,7 +23,7 @@ const readTicket = (ticketId:string) =>
 /**
  * Read all tickets from the database
  *
- *  @return {Promise}
+ *  @return {function}
  */
 const bulkReadTickets = () =>
   async (dispatch:any) => {
@@ -41,7 +41,7 @@ const bulkReadTickets = () =>
  * Read all tickets for a given event
  *
  * @param {string} eventId the id of the event
- * @return {Promise}
+ * @return {function}
  */
 const readTicketsByEvent = (eventId:string) =>
   async (dispatch:any) => {
@@ -65,7 +65,7 @@ const readTicketsByEvent = (eventId:string) =>
  * Set a ticket as purchased
  *
  * @param {string} ticketId the id of the ticket
- * @return {Promise}
+ * @return {function}
  */
 const purchaseTicket = (ticketId:string) =>
   async (dispatch: any) => {
