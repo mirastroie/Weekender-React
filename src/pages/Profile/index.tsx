@@ -59,7 +59,7 @@ const Profile = ({loadUser, profileUser, readEventsByUser, events} : ProfileProp
               {!profileUser.profilePhoto &&
              <Avatar
                sx={avatarStyle}>
-               {profileUser.username.charAt(0).toLocaleUpperCase()}
+               {profileUser.username?.charAt(0).toLocaleUpperCase()}
              </Avatar>
               }
             </Box>

@@ -7,32 +7,49 @@ import {Box} from '@mui/material';
 import {BREAKPOINTS} from '../../utils/constants/general';
 import {EventType} from '../../utils/constants/types';
 
-const EventList = ({events, bulkReadEvents} : {events:Array<EventType>, bulkReadEvents: Function}) => {
+const EventList = ({
+  events,
+  bulkReadEvents,
+}: {
+  events: Array<EventType>;
+  bulkReadEvents: Function;
+}) => {
   useEffect(() => {
     bulkReadEvents();
   }, []);
   return (
     <>
-      <Box sx={{ml: BREAKPOINTS.INNER_CONTAINER.LEFT, mt: BREAKPOINTS.INNER_CONTAINER.TOP}}>
-        <Box sx={{fontSize: 'body.fontSize'}}>{events.length} available concerts</Box>
-        <Box sx={{
-          display: 'flex',
-          flexDirection: 'row',
-          justifyContent: 'center',
-          mt: 12,
-        }}>
+      <Box
+        sx={{
+          ml: BREAKPOINTS.INNER_CONTAINER.LEFT,
+          mt: BREAKPOINTS.INNER_CONTAINER.TOP,
+        }}
+      >
+        <Box sx={{fontSize: 'body.fontSize'}}>
+          {events.length} available concerts
+        </Box>
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'center',
+            mt: 12,
+          }}
+        >
           <div>
-            {events !== [] &&
-            <Box sx={{
-              display: 'flex',
-              gap: 3,
-              flexWrap: 'wrap',
-            }}>
-              {events.map((event:EventType, index:number) => (
-                <EventItem key={index} event={event}></EventItem>
-              ))}
-            </Box>
-            }
+            {events.length > 0 && (
+              <Box
+                sx={{
+                  display: 'flex',
+                  gap: 3,
+                  flexWrap: 'wrap',
+                }}
+              >
+                {events.map((event: EventType, index: number) => (
+                  <EventItem key={index} event={event}></EventItem>
+                ))}
+              </Box>
+            )}
           </div>
         </Box>
       </Box>
@@ -40,19 +57,16 @@ const EventList = ({events, bulkReadEvents} : {events:Array<EventType>, bulkRead
   );
 };
 
-function mapStateToProps(state:any) {
+function mapStateToProps(state: any) {
   return {
     events: state.eventReducer.events,
   };
 }
 
-const mapDispatchToProps = (dispatch:any) => {
+const mapDispatchToProps = (dispatch: any) => {
   return {
     dispatch,
     bulkReadEvents: () => dispatch(bulkReadEvents()),
   };
 };
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps,
-)(EventList);
+export default connect(mapStateToProps, mapDispatchToProps)(EventList);
